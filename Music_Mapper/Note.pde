@@ -28,6 +28,6 @@ public class Note
     
     public String toString()
     {
-         return String.format("%d %d %d %d", x1, x2, y1, y2);
+         return String.format("%d %d %d", len, type, milis);
     }
 }

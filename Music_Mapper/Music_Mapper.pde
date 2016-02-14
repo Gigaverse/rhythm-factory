@@ -35,7 +35,7 @@ void setup()
   smooth();
   output = createWriter("test.rff");
   minim = new Minim(this);
-  player = minim.loadFile("camel.mp3");
+  player = minim.loadFile("rolling.mp3");
   player.play();
 }
 
@@ -77,10 +77,13 @@ void draw()
   rect(0, (2*height)/10, (width/8) - (width/16), (height)/10);
   rect((width/8) + (width/16), (2*height)/10, (width/8) - (width/16), (height)/10);
   
-  //measure buttones
+  //measure buttons
   fill(#011627);
   rect(0, (4*height)/10, (width/8) - (width/16), (height)/10);
   rect((width/8) + (width/16), (4*height)/10, (width/8) - (width/16), (height)/10);
+  
+  //bpm button
+  rect(0, (4*height)/5, width/4, (height)/5);
   
   //logo
   fill(#721817);
@@ -110,6 +113,22 @@ void draw()
   for(int i = 1; i <= subdiv; i++)
   {
     strokeWeight(1);
+    if(subdiv == 4)
+    {
+          strokeWeight(3);
+    }
+    if(subdiv == 8 && i%2==0)
+    {
+          strokeWeight(3);
+    }
+    if(subdiv == 16&& i%4==0)
+    {
+          strokeWeight(3);
+    }
+    if(subdiv == 32&& i%8==0)
+    {
+          strokeWeight(3);
+    }
     line(width/4 + ((0.75*width)*i)/(subdiv), 0,width/4 + (0.75*width*i)/(subdiv),height);
   }
   
@@ -185,7 +204,30 @@ void mouseClicked()
        }
        if(measureright())
        {
+          for(Note n : notes)
+          {
+              output.println(n);  
+          }
+          output.flush();
+          notes = new ArrayList<Note>();
+          int p = measurestop - songpos;
+          songpos = measurestop;
+          measurestop += p;
+          player.setLoopPoints(songpos, measurestop);
           return;
+       }
+       
+       if(bpmbutton())
+       {
+           songpos = max(0, songpos - 2000);
+           bpmcounter = 0;
+           bpmsolver = 0;
+           bpmtimer = 0;
+           bpm = false;
+           start = false;
+           player.cue(songpos);
+           player.play();
+           return;
        }
        if(mouseX > width/4)
        {
@@ -232,6 +274,15 @@ boolean measureright()
     return true; 
   }
   return false;
+}
+
+boolean bpmbutton()
+{
+    if(mouseX > 0 && mouseY > (4*height)/5 && mouseX < width/4 && mouseY < height)
+    {
+        return true;  
+    }
+    return false;
 }
 
 int dt()
