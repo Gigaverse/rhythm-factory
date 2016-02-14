@@ -26,6 +26,11 @@ public class Note
       rect(x1,y1,x2,y2);
     }
     
+    public int compareTo(Note n)
+    {
+       return(milis - n.milis == 0 ? n.type - type : milis - n.milis);  
+    }
+    
     public String toString()
     {
          return String.format("%d %d %d", len, type, milis);

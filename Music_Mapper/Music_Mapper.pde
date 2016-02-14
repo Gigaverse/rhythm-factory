@@ -231,7 +231,14 @@ void mouseClicked()
        }
        if(mouseX > width/4)
        {
-         Note n = new Note((byte)(((double)mouseY/height)*6),(byte)1,(int)(songpos + (measurestop-songpos)*map(mouseX, width/4, width, 0, 1)));
+         Note n = new Note((byte)(((double)mouseY/height)*6),(byte)1,(int)(songpos + (measurestop-songpos)*(int)map(mouseX, width/4, width, 0, subdiv)/subdiv));
+         for(Note not : notes)
+         {
+           if(not.compareTo(n) == 0)
+           {
+               return;  
+           }
+         }
          int currnote = (int)map(mouseX, width/4, width, 0, subdiv);
          n.store(((int)(width/4 + currnote*(0.75*width/subdiv))),(int)((n.type)*(height/6)),(int)(width*0.75/subdiv),(height/6));
          notes.add(n);
