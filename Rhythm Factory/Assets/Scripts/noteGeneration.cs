@@ -7,10 +7,13 @@ using System.Text;
 
 public class noteGeneration : MonoBehaviour {
 
-    List<int[]> songData = new List<int[]>();    
+    public GameObject noteSkin;
+    List<int[]> songData = new List<int[]>();
+    int num;
+    float time;
 
-	// Use this for initialization
-	void Start () {
+    // Use this for initialization
+    void Start () {
         try
         {
             using (StreamReader sr = new StreamReader("D:\\Files\\Code Related\\rhythm-factory\\Rhythm Factory\\Assets\\Songs\\test.rff"))
@@ -29,15 +32,35 @@ public class noteGeneration : MonoBehaviour {
         {
             Console.WriteLine(e.Message);
         }
-
-        foreach(int[] a in songData)
-        {
-            Debug.Log(a[2]);
-        }
+        time = 0;
+        num = songData.Count;
     }
-	
-	// Update is called once per frame
-	void Update () {
 
+    // Update is called once per frame
+    void Update()
+    {
+        time += Time.deltaTime * 1000;
+        int i;
+        for (i = 0; i < songData.Count; i++)
+        {
+            //Debug.Log(time);
+            if (songData[i][2] - time < 1000)
+            {
+                Debug.Log(songData[i][2]);
+                Note note = GetComponent<Note>();
+                GameObject n = Instantiate(noteSkin, new Vector3(-4 + (songData[i][1]*(10/6)), this.transform.position.y, 0), transform.rotation) as GameObject;
+                Destroy(n, (songData[i][2] - time) / 1000f);
+
+
+            }
+            else
+            {
+
+                break;
+            }
+        }
+        i--;
+        for (; i >= 0; i--)
+        { songData.Remove(songData[i]); }
     }
 }
