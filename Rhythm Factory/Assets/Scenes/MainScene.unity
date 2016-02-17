@@ -464,7 +464,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 0}
-  m_audioClip: {fileID: 8300000, guid: a64cee81abe5b5c4d99a06b6b8223576, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 3bcabdeef09b1b94ba901747b8f78333, type: 3}
   m_PlayOnAwake: 0
   m_Volume: 1
   m_Pitch: 1
@@ -541,8 +541,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   stings: []
+  millis: 0
   stingSource: {fileID: 1684231671}
   bpm: 139
+  play: 0
+  start: 0
   audio: {fileID: 0}
 --- !u!114 &1684231673
 MonoBehaviour:
@@ -641,6 +644,7 @@ GameObject:
   m_Component:
   - 4: {fileID: 1788671888}
   - 212: {fileID: 1788671887}
+  - 114: {fileID: 1788671889}
   m_Layer: 0
   m_Name: background
   m_TagString: Untagged
@@ -690,6 +694,17 @@ Transform:
   m_Children: []
   m_Father: {fileID: 2061702296}
   m_RootOrder: 0
+--- !u!114 &1788671889
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1788671886}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3858f8983f622a84d867ad6f40f714fd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &2061702295
 GameObject:
   m_ObjectHideFlags: 0
