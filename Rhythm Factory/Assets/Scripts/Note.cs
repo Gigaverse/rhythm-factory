@@ -18,7 +18,7 @@ public class Note : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         millis = Mathf.Abs(timeleft - GameObject.Find("NoteGenerator").GetComponent<Audio>().audio.time * 1000);
-        gameObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 0.15f, this.transform.position.z);
+		gameObject.transform.position = new Vector3(this.transform.position.x, this.transform.position.y - 8.775f*Time.deltaTime, this.transform.position.z);
 
     }
 
