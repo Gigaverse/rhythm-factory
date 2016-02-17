@@ -9,6 +9,7 @@ using System.Text;
 public class noteGeneration : MonoBehaviour {
     public GameObject noteSkin;
     public static long score=0;
+	long maxScore=0;
     public GUIText scoreDisplay;
     List<GameObject> notes = new List<GameObject>();
     List<int[]> songData = new List<int[]>();
@@ -21,7 +22,7 @@ public class noteGeneration : MonoBehaviour {
         scoreDisplay.text = "Score";
         try
         {
-            using (StreamReader sr = new StreamReader(Application.dataPath + "/Songs/rolling.rff"))
+            using (StreamReader sr = new StreamReader(Application.dataPath + "/Resources/Songs/rolling.rff"))
             {
                 while (sr.Peek() >= 0)
                 {
@@ -39,14 +40,16 @@ public class noteGeneration : MonoBehaviour {
         }
         time = 0;
         num = songData.Count;
+		maxScore = songData.Count * 300;
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (Time.time < 5.2) return;
-        time += Time.deltaTime * 1000;
-        scoreDisplay.text = score + "";
+		Debug.Log (time);
+		time += Time.deltaTime * 1000;
+		if (!GameObject.Find("NoteGenerator").GetComponent<Audio>().start) return;
+		scoreDisplay.text = score + "\n" +  (((float)score/maxScore)*100f).ToString("F2");
 
         for(int j = notes.Count - 1; j >= 0; j--)
         {
@@ -82,7 +85,7 @@ public class noteGeneration : MonoBehaviour {
             {
                 //Debug.Log(songData[i][1]);
                 //Note note = GetComponent<Note>();
-                GameObject n = Instantiate(noteSkin, new Vector3(-4f - (10f / 6f) + (songData[i][1] * (10f/6f)), this.transform.position.y +25f, this.transform.position.z), transform.rotation) as GameObject;
+                GameObject n = Instantiate(noteSkin, new Vector3(-4f - (10f / 6f) + (songData[i][1] * (10f/6f)), this.transform.position.y +13f, this.transform.position.z), transform.rotation) as GameObject;
                 n.GetComponent<Note>().init(songData[i][2], songData[i][1]);
                 notes.Add(n);
                 Destroy(n, (songData[i][2] - time) / 500f);

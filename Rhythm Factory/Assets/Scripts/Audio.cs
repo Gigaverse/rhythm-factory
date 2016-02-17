@@ -7,9 +7,10 @@ public class Audio : MonoBehaviour
 {
 
     public AudioClip[] stings;
+	public float millis = 0;
     public AudioSource stingSource;
     public float bpm = 139;
-    bool play = false, start = false;
+    public bool play = false, start = false;
     public AudioSource audio;
 
     // Use this for initialization
@@ -24,12 +25,13 @@ public class Audio : MonoBehaviour
         {
             play = true;
             Debug.Log("HERE WE GO");
+			audio.Play();
+			start = true;
         }
-        if (play && !start)
-        {
-            audio.Play();
-            start = true;
-        }
+		if ((int)(audio.time*1000) != (int)millis) {
+			GameObject.Find ("NoteGenerator").GetComponent<noteGeneration> ().time = (GameObject.Find ("NoteGenerator").GetComponent<noteGeneration> ().time + audio.time*1000) / 2;
+		}
+		millis = audio.time;
     }
 
 }
